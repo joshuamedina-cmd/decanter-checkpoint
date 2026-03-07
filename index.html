@@ -670,16 +670,17 @@ const PRE_DECANTER_GROUP = 'group_title';    // "Pre-Decanter"
 const PRE_FILTER_GROUP = 'group_mm16qcxp';   // "Pre-Filter"
 
 // Operators
-const OPERATORS = {
-  'QL01': 'Quinton L',
-  'JR01': 'Jaime R',
-  'JL01': 'James L',
-  'JD01': 'Jaime D',
-  'JD02': 'J.D.',
-  'SL01': 'Sly',
-  'MH01': 'Moh',
-  'JM01': 'Joshua',
-  'KD01': 'Kevin D.'
+var OPERATORS = {
+  '5150': 'Bobby',
+  '0419': 'Laker',
+  '0420': 'Q',
+  '4093': 'George',
+  '2008': 'Jaime',
+  '8818': 'Cris',
+  '7117': 'FernDawg',
+  '0001': 'KD',
+  '1234': 'Moh',
+  '4444': 'Zee'
 };
 
 // ==================== STATE ====================
@@ -1074,7 +1075,7 @@ function updateTimer() {
 
 // ==================== AUTH ====================
 function handleLogin(code) {
-  const upper = code.toUpperCase();
+  const upper = code;
   if (OPERATORS[upper]) {
     currentOperator = OPERATORS[upper];
     document.getElementById('loginScreen').style.display = 'none';
