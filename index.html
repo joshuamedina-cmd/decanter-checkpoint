@@ -126,7 +126,6 @@
     color: var(--text);
     font-weight: 600;
     letter-spacing: 4px;
-    text-transform: uppercase;
     outline: none;
     transition: border-color 0.2s;
   }
@@ -586,8 +585,19 @@
   <!-- LOGIN SCREEN -->
   <div id="loginScreen" class="card login-section">
     <h2>Operator Login</h2>
-    <input type="text" id="codeInput" placeholder="0000" maxlength="4" autofocus>
-    <div class="login-hint">Enter your operator code to continue</div>
+    <label class="form-label" for="codeInput">Enter your 4-digit operator code</label>
+    <input
+      type="password"
+      id="codeInput"
+      class="form-input"
+      placeholder="0000"
+      maxlength="4"
+      inputmode="numeric"
+      pattern="[0-9]{4}"
+      autocomplete="off"
+      autofocus
+    >
+    <div style="font-size:0.75rem;opacity:0.6;margin-top:4px;">Auto-submits on 4 digits &bull; or press Enter</div>
   </div>
 
   <!-- MAIN APP (hidden until login) -->
@@ -1092,6 +1102,7 @@ function handleLogin(code) {
     document.getElementById('mainApp').style.display = 'block';
     document.getElementById('operatorName').textContent = currentOperator;
 
+    showToast('Hi ' + currentOperator + '!');
     loadBatches().then(() => {
       renderControl();
     });
