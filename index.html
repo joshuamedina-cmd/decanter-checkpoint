@@ -583,11 +583,11 @@
   </div>
 
   <!-- LOGIN SCREEN -->
-  <div id="loginScreen" class="card login-section" style="display:none!important">
+  <div id="loginScreen" class="card login-section">
     <h2>Operator Login</h2>
     <label class="form-label" for="codeInput">Enter your 4-digit operator code</label>
     <input
-      type="password"
+      type="text"
       id="codeInput"
       class="form-input"
       placeholder="0000"
@@ -601,7 +601,7 @@
   </div>
 
   <!-- MAIN APP -->
-  <div id="mainApp" style="display:block">
+  <div id="mainApp" style="display:none">
 
     <!-- OPERATOR BADGE + STATUS -->
     <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:16px;">
@@ -697,6 +697,7 @@ var OPERATORS = {
   '0419': 'Laker',
   '7117': 'FernDawg',
   '0001': 'KD',
+  '8888': 'JJ',
   '1234': 'Moh',
   '2691': 'Quentin',
   '8305': 'George T',
@@ -1178,20 +1179,23 @@ document.getElementById('codeInput').addEventListener('keydown', function(e) {
   var name = null;
   try { name = localStorage.getItem('kmjz_operator_name'); } catch(e) {}
   if (name) {
-    if (typeof currentOperator !== 'undefined') currentOperator = name;
+    // Set operator state
+    currentOperator = name;
     window._autoOperator = name;
+
+    // Update operator badge
+    var badge = document.getElementById('operatorName');
+    if (badge) badge.textContent = name;
+
+    // Hide login, show app
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+
+    // Load batches from Monday.com and render the START button
+    loadBatches().then(function() {
+      renderControl();
+    });
   }
-  // Update operator badge/name elements
-  var badge = document.getElementById('operatorName');
-  if (badge && name) badge.textContent = name;
-  // Hide login, show app
-  var login = document.getElementById('loginScreen');
-  if (login) login.style.display = 'none';
-  var app = document.getElementById('mainApp') || document.getElementById('appContent');
-  if (app) app.style.display = '';
-  // Show header if hidden
-  var header = document.getElementById('appHeader');
-  if (header) header.style.display = '';
 })();
 </script>
 </body>
