@@ -585,19 +585,33 @@
   <!-- LOGIN SCREEN -->
   <div id="loginScreen" class="card login-section">
     <h2>Operator Login</h2>
-    <label class="form-label" for="codeInput">Enter your 4-digit operator code</label>
-    <input
-      type="text"
-      id="codeInput"
-      class="form-input"
-      placeholder="0000"
-      maxlength="4"
-      inputmode="numeric"
-      pattern="[0-9]{4}"
-      autocomplete="off"
-      autofocus
-    >
-    <div style="font-size:0.75rem;opacity:0.6;margin-top:4px;">Auto-submits on 4 digits &bull; or press Enter</div>
+    <label class="form-label" for="operatorSelect">Select your name</label>
+    <select id="operatorSelect" class="form-input" style="appearance:auto;-webkit-appearance:menulist;padding:10px;font-size:1rem;">
+      <option value="">-- Choose Operator --</option>
+      <option value="Arturo">Arturo</option>
+      <option value="Bobby">Bobby</option>
+      <option value="Cris">Cris</option>
+      <option value="Dylan S">Dylan S</option>
+      <option value="Eli">Eli</option>
+      <option value="FernDawg">FernDawg</option>
+      <option value="Frank">Frank</option>
+      <option value="George">George</option>
+      <option value="George T">George T</option>
+      <option value="Jaime D">Jaime D</option>
+      <option value="Jaime P">Jaime P</option>
+      <option value="JDub">JDub</option>
+      <option value="Jeremy">Jeremy</option>
+      <option value="JJ">JJ</option>
+      <option value="Josh">Josh</option>
+      <option value="KD">KD</option>
+      <option value="Laker">Laker</option>
+      <option value="Moh">Moh</option>
+      <option value="Q">Q</option>
+      <option value="Quentin">Quentin</option>
+      <option value="Sly">Sly</option>
+      <option value="Zee">Zee</option>
+    </select>
+    <button onclick="handleDropdownLogin()" style="margin-top:10px;padding:12px;width:100%;font-size:1rem;font-weight:600;border:none;border-radius:8px;background:#2563eb;color:#fff;cursor:pointer;">Continue</button>
   </div>
 
   <!-- MAIN APP -->
@@ -679,31 +693,6 @@ const BOARD_ID = '18402821844';
 const PRE_DECANTER_GROUP = 'group_title';    // "Pre-Decanter"
 const PRE_FILTER_GROUP = 'group_mm16qcxp';   // "Pre-Filter"
 
-// Operators
-var OPERATORS = {
-  '4821': 'Josh',
-  '0420': 'Q',
-  '1911': 'Jaime D',
-  '4093': 'George',
-  '5150': 'Bobby',
-  '2008': 'Jaime P',
-  '6239': 'Sly',
-  '4444': 'Zee',
-  '3979': 'Dylan S',
-  '9034': 'JDub',
-  '8818': 'Cris',
-  '5463': 'Arturo',
-  '3847': 'Eli',
-  '0419': 'Laker',
-  '7117': 'FernDawg',
-  '0001': 'KD',
-  '8888': 'JJ',
-  '1234': 'Moh',
-  '2691': 'Quentin',
-  '8305': 'George T',
-  '4629': 'Frank',
-  '0301': 'Jeremy'
-};
 
 // ==================== STATE ====================
 let currentOperator = null;
@@ -1097,19 +1086,19 @@ function updateTimer() {
 }
 
 // ==================== AUTH ====================
-function handleLogin(code) {
-  const upper = code;
-  if (OPERATORS[upper]) {
-    currentOperator = OPERATORS[upper];
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('mainApp').style.display = 'block';
-    document.getElementById('operatorName').textContent = currentOperator;
+function handleDropdownLogin() {
+  var sel = document.getElementById('operatorSelect');
+  var name = sel.value;
+  if (!name) return;
+  currentOperator = name;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  document.getElementById('operatorName').textContent = currentOperator;
 
-    showToast('Hi ' + currentOperator + '!');
-    loadBatches().then(() => {
-      renderControl();
-    });
-  }
+  showToast('Hi ' + currentOperator + '!');
+  loadBatches().then(() => {
+    renderControl();
+  });
 }
 
 function logout() {
@@ -1160,17 +1149,6 @@ function escapeHtml(str) {
 }
 
 // ==================== INIT ====================
-document.getElementById('codeInput').addEventListener('input', function(e) {
-  if (e.target.value.length === 4) {
-    handleLogin(e.target.value);
-  }
-});
-
-document.getElementById('codeInput').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && e.target.value.length >= 2) {
-    handleLogin(e.target.value);
-  }
-});
 </script>
 
 
