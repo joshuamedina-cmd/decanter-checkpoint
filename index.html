@@ -766,6 +766,7 @@ async function loadBatches() {
     });
 
     renderQueue();
+    renderControl();
     setStatus('idle', `${batches.length} batch${batches.length !== 1 ? 'es' : ''} in queue`);
 
   } catch (err) {
